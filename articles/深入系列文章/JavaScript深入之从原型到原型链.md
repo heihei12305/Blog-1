@@ -1,12 +1,12 @@
 # JavaScript深入之从原型到原型链
 
-> JavaScript深入系列的第一篇，从原型与原型链开始讲起，如果你想知道构造函数的实例的原型，原型的原型，原型的原型的原型是什么，就来看看这篇文章吧。
+>JavaScript深入系列的第一篇，从原型与原型链开始讲起，如果你想知道构造函数的实例的原型，原型的原型，原型的原型的原型是什么，就来看看这篇文章吧。
 
 ## 构造函数创建对象
 
 我们先使用构造函数创建一个对象：
 
-```javascript
+```js
 function Person() {
 
 }
@@ -23,7 +23,7 @@ console.log(person.name) // Kevin
 
 每个函数都有一个 prototype 属性，就是我们经常在各种例子中看到的那个 prototype ，比如：
 
-```javascript
+```js
 function Person() {
 
 }
@@ -40,11 +40,11 @@ console.log(person2.name) // Kevin
 
 其实，函数的 prototype 属性指向了一个对象，这个对象正是调用该构造函数而创建的**实例**的原型，也就是这个例子中的 person1 和 person2 的原型。
 
-那什么是原型呢？你可以这样理解：每一个JavaScript对象\(null除外\)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型"继承"属性。
+那什么是原型呢？你可以这样理解：每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型"继承"属性。
 
 让我们用一张图表示构造函数和实例原型之间的关系：
 
-![&#x6784;&#x9020;&#x51FD;&#x6570;&#x548C;&#x5B9E;&#x4F8B;&#x539F;&#x578B;&#x7684;&#x5173;&#x7CFB;&#x56FE;](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype1.png)
+![构造函数和实例原型的关系图](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype1.png)
 
 在这张图中我们用 Object.prototype 表示实例原型。
 
@@ -52,11 +52,11 @@ console.log(person2.name) // Kevin
 
 ## \_\_proto\_\_
 
-这是每一个JavaScript对象\(除了 null \)都具有的一个属性，叫\_\_proto\_\_，这个属性会指向该对象的原型。
+这是每一个JavaScript对象(除了 null )都具有的一个属性，叫\_\_proto\_\_，这个属性会指向该对象的原型。
 
 为了证明这一点,我们可以在火狐或者谷歌中输入：
 
-```javascript
+```js
 function Person() {
 
 }
@@ -66,17 +66,17 @@ console.log(person.__proto__ === Person.prototype); // true
 
 于是我们更新下关系图：
 
-![&#x5B9E;&#x4F8B;&#x4E0E;&#x5B9E;&#x4F8B;&#x539F;&#x578B;&#x7684;&#x5173;&#x7CFB;&#x56FE;](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype2.png)
+![实例与实例原型的关系图](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype2.png)
 
 既然实例对象和构造函数都可以指向原型，那么原型是否有属性指向构造函数或者实例呢？
 
 ## constructor
 
-指向实例倒是没有，因为一个构造函数可以生成多个实例，但是原型指向构造函数倒是有的，这就要讲到第三个属性：constructor ，每个原型都有一个 constructor 属性指向关联的构造函数。
+指向实例倒是没有，因为一个构造函数可以生成多个实例，但是原型指向构造函数倒是有的，这就要讲到第三个属性：constructor﻿，每个原型都有一个 constructor 属性指向关联的构造函数。
 
 为了验证这一点，我们可以尝试：
 
-```javascript
+```js
 function Person() {
 
 }
@@ -85,11 +85,11 @@ console.log(Person === Person.prototype.constructor); // true
 
 所以再更新下关系图：
 
-![&#x5B9E;&#x4F8B;&#x539F;&#x578B;&#x4E0E;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x5173;&#x7CFB;&#x56FE;](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype3.png)
+![实例原型与构造函数的关系图](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype3.png)
 
 综上我们已经得出：
 
-```javascript
+```js
 function Person() {
 
 }
@@ -110,7 +110,7 @@ console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 
 举个例子：
 
-```javascript
+```js
 function Person() {
 
 }
@@ -128,7 +128,7 @@ console.log(person.name) // Kevin
 
 在这个例子中，我们给实例对象 person 添加了 name 属性，当我们打印 person.name 的时候，结果自然为 Daisy。
 
-但是当我们删除了 person 的 name 属性时，读取 person.name，从 person 对象中找不到 name 属性就会从 person 的原型也就是 person.\_\_proto\_\_ ，也就是 Person.prototype中查找，幸运的是我们找到了 name 属性，结果为 Kevin。
+但是当我们删除了 person 的 name 属性时，读取 person.name，从 person 对象中找不到 name 属性就会从 person 的原型也就是 person.\_\_proto\_\_ ，也就是 Person.prototype中查找，幸运的是我们找到了  name 属性，结果为 Kevin。
 
 但是万一还没有找到呢？原型的原型又是什么呢？
 
@@ -136,7 +136,7 @@ console.log(person.name) // Kevin
 
 在前面，我们已经讲了原型也是一个对象，既然是对象，我们就可以用最原始的方式创建它，那就是：
 
-```javascript
+```js
 var obj = new Object();
 obj.name = 'Kevin'
 console.log(obj.name) // Kevin
@@ -144,7 +144,7 @@ console.log(obj.name) // Kevin
 
 所以原型对象是通过 Object 构造函数生成的，结合之前所讲，实例的 \_\_proto\_\_ 指向构造函数的 prototype ，所以我们再更新下关系图：
 
-![&#x539F;&#x578B;&#x7684;&#x539F;&#x578B;&#x5173;&#x7CFB;&#x56FE;](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype4.png)
+![原型的原型关系图](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype4.png)
 
 ## 原型链
 
@@ -152,7 +152,7 @@ console.log(obj.name) // Kevin
 
 null，我们可以打印：
 
-```javascript
+```js
 console.log(Object.prototype.__proto__ === null) // true
 ```
 
@@ -168,7 +168,7 @@ console.log(Object.prototype.__proto__ === null) // true
 
 最后一张关系图也可以更新为：
 
-![&#x539F;&#x578B;&#x94FE;&#x793A;&#x610F;&#x56FE;](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype5.png)
+![原型链示意图](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype5.png)
 
 顺便还要说一下，图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线。
 
@@ -180,7 +180,7 @@ console.log(Object.prototype.__proto__ === null) // true
 
 首先是 constructor 属性，我们看个例子：
 
-```javascript
+```js
 function Person() {
 
 }
@@ -190,13 +190,13 @@ console.log(person.constructor === Person); // true
 
 当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：
 
-```javascript
+```js
 person.constructor === Person.prototype.constructor
 ```
 
 ### \_\_proto\_\_
 
-其次是 \_\_proto\_\_ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.\_\_proto\_\_ 时，可以理解成返回了 Object.getPrototypeOf\(obj\)。
+其次是 \_\_proto\_\_ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.\_\_proto\_\_ 时，可以理解成返回了 Object.getPrototypeOf(obj)。
 
 ### 真的是继承吗？
 
@@ -215,4 +215,3 @@ JavaScript深入系列目录地址：[https://github.com/mqyqingfeng/Blog](https
 JavaScript深入系列预计写十五篇左右，旨在帮大家捋顺JavaScript底层知识，重点讲解如原型、作用域、执行上下文、变量对象、this、闭包、按值传递、call、apply、bind、new、继承等难点概念。
 
 如果有错误或者不严谨的地方，请务必给予指正，十分感谢。如果喜欢或者有所启发，欢迎star，对作者也是一种鼓励。
-

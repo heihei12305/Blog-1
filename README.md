@@ -1,5 +1,7 @@
 # 冴羽的博客
 
+## gitbook小书 ![https://heihei12305-2.gitbook.io/-1/](https://heihei12305-2.gitbook.io/-1/)
+
 ## 求简历
 
 明年毕业的同学欢迎来投淘宝技术部，有兴趣联系我, 微信同 Github ID

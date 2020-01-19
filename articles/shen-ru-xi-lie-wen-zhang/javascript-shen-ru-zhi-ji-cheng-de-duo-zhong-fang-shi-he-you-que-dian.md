@@ -1,7 +1,7 @@
 # JavaScript深入之继承的多种方式和优缺点
 
 > JavaScript深入系列第十五篇，讲解JavaScript各种继承方式和优缺点。
- 
+
 ## 写在前面
 
 本文讲解JavaScript各种继承方式和优缺点。
@@ -12,7 +12,7 @@
 
 ## 1.原型链继承
 
-```js
+```javascript
 function Parent () {
     this.name = 'kevin';
 }
@@ -36,7 +36,7 @@ console.log(child1.getName()) // kevin
 
 1.引用类型的属性被所有实例共享，举个例子：
 
-```js
+```javascript
 function Parent () {
     this.names = ['kevin', 'daisy'];
 }
@@ -60,9 +60,9 @@ console.log(child2.names); // ["kevin", "daisy", "yayu"]
 
 2.在创建 Child 的实例时，不能向Parent传参
 
-## 2.借用构造函数(经典继承)
+## 2.借用构造函数\(经典继承\)
 
-```js
+```javascript
 function Parent () {
     this.names = ['kevin', 'daisy'];
 }
@@ -90,7 +90,7 @@ console.log(child2.names); // ["kevin", "daisy"]
 
 举个例子：
 
-```js
+```javascript
 function Parent (name) {
     this.name = name;
 }
@@ -116,7 +116,7 @@ console.log(child2.name); // daisy
 
 原型链继承和经典继承双剑合璧。
 
-```js
+```javascript
 function Parent (name) {
     this.name = name;
     this.colors = ['red', 'blue', 'green'];
@@ -129,7 +129,7 @@ Parent.prototype.getName = function () {
 function Child (name, age) {
 
     Parent.call(this, name);
-    
+
     this.age = age;
 
 }
@@ -155,7 +155,7 @@ console.log(child2.colors); // ["red", "blue", "green"]
 
 ## 4.原型式继承
 
-```js
+```javascript
 function createObj(o) {
     function F(){}
     F.prototype = o;
@@ -169,7 +169,7 @@ function createObj(o) {
 
 包含引用类型的属性值始终都会共享相应的值，这点跟原型链继承一样。
 
-```js
+```javascript
 var person = {
     name: 'kevin',
     friends: ['daisy', 'kelly']
@@ -191,7 +191,7 @@ console.log(person2.friends); // ["daisy", "kelly", "taylor"]
 
 创建一个仅用于封装继承过程的函数，该函数在内部以某种形式来做增强对象，最后返回对象。
 
-```js
+```javascript
 function createObj (o) {
     var clone = object.create(o);
     clone.sayName = function () {
@@ -207,7 +207,7 @@ function createObj (o) {
 
 为了方便大家阅读，在这里重复一下组合继承的代码：
 
-```js
+```javascript
 function Parent (name) {
     this.name = name;
     this.colors = ['red', 'blue', 'green'];
@@ -233,19 +233,19 @@ console.log(child1)
 
 一次是设置子类型实例的原型的时候：
 
-```js
+```javascript
 Child.prototype = new Parent();
 ```
 
 一次在创建子类型实例的时候：
 
-```js
+```javascript
 var child1 = new Child('kevin', '18');
 ```
 
 回想下 new 的模拟实现，其实在这句中，我们会执行：
 
-```js
+```javascript
 Parent.call(this, name);
 ```
 
@@ -255,11 +255,11 @@ Parent.call(this, name);
 
 那么我们该如何精益求精，避免这一次重复调用呢？
 
-如果我们不使用 Child.prototype = new Parent() ，而是间接的让 Child.prototype 访问到 Parent.prototype 呢？
+如果我们不使用 Child.prototype = new Parent\(\) ，而是间接的让 Child.prototype 访问到 Parent.prototype 呢？
 
 看看如何实现：
 
-```js
+```javascript
 function Parent (name) {
     this.name = name;
     this.colors = ['red', 'blue', 'green'];
@@ -289,7 +289,7 @@ console.log(child1);
 
 最后我们封装一下这个继承方法：
 
-```js
+```javascript
 function object(o) {
     function F() {}
     F.prototype = o;
@@ -327,3 +327,4 @@ JavaScript深入系列目录地址：[https://github.com/mqyqingfeng/Blog](https
 JavaScript深入系列预计写十五篇左右，旨在帮大家捋顺JavaScript底层知识，重点讲解如原型、作用域、执行上下文、变量对象、this、闭包、按值传递、call、apply、bind、new、继承等难点概念。
 
 如果有错误或者不严谨的地方，请务必给予指正，十分感谢。如果喜欢或者有所启发，欢迎star，对作者也是一种鼓励。
+
